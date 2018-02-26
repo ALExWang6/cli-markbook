@@ -8,19 +8,21 @@ public class Main {
         String choice1;
         int[] studentNum;
         double[] sAverage;
-        int cAverage;
+        double cAverage;
         String[] name;
         int total = 0;
         boolean[] danger;
+        double classTotal = 0;
+    
 
-        System.out.println("Please type in the total number of students.");
+        System.out.print("Please type in the total number of students.");
         total = input.nextInt();
         name = new String[total];
         sAverage = new double[total];
         studentNum = new int[total];
         danger = new boolean[total];
 
-        System.out.printf("What would you like to do?\nEdit Student info? See the list? Check student login information?");
+        System.out.printf("What would you like to do?\nEdit Student info(Edit)? See the list?(list) Check student login information(check)?");
 
         choice1 = input.next();
 
@@ -31,7 +33,7 @@ public class Main {
 
                     for(int i = 0; i < total; i++) {
 
-                        System.out.print("Enter student name: ");
+                        System.out.print("Enter " + (i+1) + "#student name: ");
                         name[i] = input.next();
                         System.out.print("Enter the student's number: ");
                         studentNum[i] = input.nextInt();
@@ -44,8 +46,15 @@ public class Main {
                         else{
                           danger[i] = false;
                         }
+                        
+                        classTotal += sAverage[i];
+                        
+                        System.out.println("");
 
                     }
+                    
+                  
+                    cAverage = classTotal / total;
 
             System.out.println("╔═════════════════════════════╦═══════════╦═══════════════════════╦════════════════════════════════╗");
             System.out.println("║        Student Name         ║ Student # ║ Student's Average (%) ║ In Danger?/Missed Assignments? ║");
@@ -54,6 +63,8 @@ public class Main {
           for(int j = 0; j < total; j++){
             System.out.println("║        " + name[j] + "      " + studentNum[j] + "    " + sAverage[j] + "     " + danger[j] + "║");
           }
+          
+          System.out.println("║   class average: " + cAverage );
 
     }
 }
