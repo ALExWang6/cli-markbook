@@ -31,6 +31,7 @@ public class Main {
   
       //  User wants to view Student #
       if (choice == 1) {
+        System.out.println("Student #s");
         for(int i = 0; i < total; i++) {
   
           System.out.print("What is Student #" + (i + 1) + "'s name? ");
@@ -50,6 +51,7 @@ public class Main {
       
       //  User wants to view Student's averages  
       } else if (choice == 2) {
+          System.out.println("Student's Averages");
           for(int i = 0; i < total; i++) {
     
             System.out.printf("What is Student #" + (i + 1) + "'s name? ");
@@ -81,6 +83,7 @@ public class Main {
       
       //  User wants to view student logins (passwords could not yet be implemented)
       } else if (choice == 3) {
+          System.out.println("Student's Logins");
           for(int i = 0; i < total; i++) {
             System.out.print("What is Student #" + (i + 1) + "'s first name? ");
             name[i] = input.next();
