@@ -3,103 +3,90 @@ import java.util.*;
 public class Main {
   public static void main(String[] args) {
 
+
+    // to remove one part of row from the list, you use the .remove() function to an index and add another row using .add() 
     Scanner input = new Scanner(System.in);
     int choice;
+    int count = 0;
+    int quiz = 0;
     int[] studentNum;
     double[] sAverage;
+    double[][] quizMarks;
+    double qMark;
+    double qTotal = 0;
     int cAverage;
     String[] name;
     int total = 0;
     int classTotal = 0;
-    String[] assignments;
-    String[] name2;
     String[] gradYear;
+    boolean[] danger;
+    boolean end = false;
 
     System.out.print("Please type in the total number of students:");
     total = input.nextInt();
     name = new String[total];
     sAverage = new double[total];
     studentNum = new int[total];
-    assignments = new String[total];
-    name2 = new String[total];
     gradYear = new String[total];
-
-    if (total > 0) {  //When user has more than zero students enrolled
+    danger = new boolean[total];
     
-      System.out.printf("What would you like to view?\n(1)\tStudent #\n(2)\tStudent's Averages\n(3)\tStudent's Logins\nPlease enter either '1' or '2' or '3':\t");
-      choice = input.nextInt();
-  
-      //  User wants to view Student #
-      if (choice == 1) {
-        System.out.println("Student #s");
-        for(int i = 0; i < total; i++) {
+    System.out.println("Please type in the students info.");
+            
+          for(int i = 0; i < total; i++) {
   
           System.out.print("What is Student #" + (i + 1) + "'s name? ");
           name[i] = input.next();
           System.out.print("What is " + name[i] + "'s student number? ");
           studentNum[i] = input.nextInt();
-        }
           
-        String classTable1 = "║ %-15s ║ %-9d ║%n";
-        System.out.format("╔═════════════════╦═══════════╗%n");
-        System.out.format("║ Student Name    ║ Student # ║%n");
-        System.out.format("╠═════════════════╬═══════════╣%n");
-        for (int j = 0; j < total; j++) {
-          System.out.format(classTable1, name[j], studentNum[j]);
-        }
-        System.out.format("╚═════════════════╩═══════════╝%n");
-      
-      //  User wants to view Student's averages  
-      } else if (choice == 2) {
-          System.out.println("Student's Averages");
-          for(int i = 0; i < total; i++) {
-    
-            System.out.printf("What is Student #" + (i + 1) + "'s name? ");
-            name[i] = input.next();
-            System.out.print("What is " + name[i] + "'s average (%)? ");
-            sAverage[i] = input.nextDouble();
-            System.out.print("Is " + name[i] + " missing any assignments (YES/NO)? ");
-            assignments[i] = input.next().toLowerCase();
+          }
+          
+          while(end == false){
+          System.out.printf("What would you like to do?\n(1)\tEdit marks?\n(2)\tSee list of Average?\n(3)\tDanger students?\nPlease enter either '1' or '2' or '3':\t");
+          choice = input.nextInt();
+          
+          if(choice == 1){
             
-            if (sAverage[i] <= 65 || assignments[i].equals("yes")) {
-              System.out.println(name[i] + "'s grades are in danger!!!");
+            if(count == 0){
+              System.out.println("How many quiz are there?");
+              quiz = input.nextInt();
+              quizMarks = new double[total][quiz];
+              
+              for(int t = 0; t < total; t++){
+              for(int k = 0; k < quiz; k++){
+                System.out.println("What is " + name[t] + "'s " + (k+1) + "# quiz mark?");
+                qMark = input.nextDouble();
+                quizMarks[t][k] = qMark;
+                qTotal += qMark;  
+              }
+              sAverage[t] = qTotal / quiz;
+              qTotal = 0;
+              }
+              count ++;
+              
+              for(int u = 0; u < total; u++){
+                for(int y = 0; y < quiz; y++){
+                System.out.println(name[u] + (y+1) + "# quiz mark is " + quizMarks[u][y]);
+              }
+              System.out.println("His average is " + sAverage[u]); 
+                System.out.println("");
+              }
+              
+              System.out.println();
             }
-            // Gather sum of averages
-            classTotal += sAverage[i];
+            
+            else{
+              int editChoice;
+              System.out.println("Which student info would you like to change? Type 0 ~ " + (total-1));
+              editChoice = input.nextInt();
+              
+            }
+          
+          }
+          
           }
             
-          String classTable2 = "║ %-15s ║ %-11g ║%n";
-          System.out.format("╔═════════════════╦═════════════╗%n");
-          System.out.format("║ Student Name    ║ Average (%%) ║%n");
-          System.out.format("╠═════════════════╬═════════════╣%n");
-          for (int j = 0; j < total; j++) {
-            System.out.format(classTable2, name[j], sAverage[j]);
-          }
-          System.out.format("╚═════════════════╩═════════════╝%n");
-          
-          // Calculate total class average
-          cAverage = classTotal / total;
-          System.out.println("Class Average:\t" + cAverage + "%");
-      
-      //  User wants to view student logins (passwords could not yet be implemented)
-      } else if (choice == 3) {
-          System.out.println("Student's Logins");
-          for(int i = 0; i < total; i++) {
-            System.out.print("What is Student #" + (i + 1) + "'s first name? ");
-            name[i] = input.next();
-            System.out.print("What is " + name[i] + "'s last name? ");
-            name2[i] = input.next();
-            System.out.print("When is " + name[i] + " " + name2[i] + " graduating? 20");
-            gradYear[i] = input.next();
-            System.out.print("This student's login is:\t" + name[i] + "." + name2[i] + gradYear[i] + "@ycdsbk12.ca\n");
-          }
-      
-      // User enters a number that is not 1, 2, or 3
-      } else {
-        System.out.println("Not a valid command! Please restart the program and try again!");
-      }
-    } else {  // When user enters 0 for number of students
-      System.out.println("There are no students in your class.");
-    }
-  }
-}
+            
+          } // main method
+    
+  }// class
